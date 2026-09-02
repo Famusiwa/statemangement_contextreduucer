@@ -5,7 +5,7 @@ type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
-  children: ReactNode;
+  children?: ReactNode;
   actions?: ReactNode;
 };
 
@@ -29,7 +29,7 @@ const Modal = ({ isOpen, onClose, title, children, actions }: ModalProps) => {
   return createPortal(
     <dialog id="modal" ref={dialogRef} onClose={onClose}>
       {title && <h2>{title}</h2>}
-      <div>{children}</div> 
+      <div>{children}</div>
       {actions && (
         <form method="dialog" id="modal-actions">
           {actions}

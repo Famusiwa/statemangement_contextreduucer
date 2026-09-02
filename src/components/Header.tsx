@@ -1,26 +1,26 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Modal from "../customs/Modal";
-import type { CartItem } from "../lib/types";
-type HeaderProps = {
-  cart: {
-    items: CartItem[];
-  };
-  onUpdateCartItemQuantity: (productId: string, amount: number) => void;
-};
+// import type { CartItem } from "../lib/types";
+import { CartContext } from "../store/shopping-cart-context";
+import Cart from "./Cart";
+// type HeaderProps = {
+//   cart: {
+//     items: CartItem[];
+//   };
+//   onUpdateCartItemQuantity: (productId: string, amount: number) => void;
+// };
 
-const Header = ({ cart, onUpdateCartItemQuantity }: HeaderProps) => {
+const Header = () => {
+  const { items } = useContext(CartContext);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const cartQuantity = cart.items.reduce(
-    (total, item) => total + item.quantity,
-    0,
-  );
+  const cartQuantity = items.length;
 
-  const totalPrice = cart.items.reduce(
-    (acc: number, item: CartItem) => acc + item.price * item.quantity,
-    0,
-  );
+  // const totalPrice = cart.items.reduce(
+  //   (acc: number, item: CartItem) => acc + item.price * item.quantity,
+  //   0,
+  // );
 
-  const formattedTotalPrice = `$${totalPrice.toFixed(2)}`;
+  // const formattedTotalPrice = `$${totalPrice.toFixed(2)}`;
 
   // const formattedPrice = `${items.price.toFixed(2)}`;
   // const formattedPrice = (price: number) => `$${price.toFixed(2)}`;
@@ -54,44 +54,7 @@ const Header = ({ cart, onUpdateCartItemQuantity }: HeaderProps) => {
         title="Your Cart"
         actions={modalActions}
       >
-        <div id="cart">
-          {cart.items.length === 0 ? (
-            <p>Your cart is empty.</p>
-          ) : (
-            <ul className="cart-items">
-              {cart.items.map((item) => {
-                const formattedPrice = `${item.price.toFixed(2)}`;
-                return (
-                  <li key={item.id} className="cart-item-details">
-                    <div>
-                      <span className="cart-item-name">{item.name}</span>
-                      <span className="cart-item-price">
-                        ({formattedPrice})
-                      </span>
-                    </div>
-
-                    <div className="cart-item-actions">
-                      <button
-                        onClick={() => onUpdateCartItemQuantity(item.id, -1)}
-                      >
-                        -
-                      </button>
-                      <span>{item.quantity}</span>
-                      <button
-                        onClick={() => onUpdateCartItemQuantity(item.id, 1)}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-          <p id="cart-total-price">
-            Cart Total: <strong>{formattedTotalPrice}</strong>
-          </p>
-        </div>
+        <Cart />
       </Modal>
       <header id="main-header">
         <div id="main-title">

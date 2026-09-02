@@ -1,20 +1,9 @@
-type ProductProps = {
-  id: string;
-  image: string;
-  title: string;
-  price: number;
-  description: string;
-  onAddToCart: (id: string) => void;
-};
+import { useContext } from "react";
+import { CartContext } from "../store/shopping-cart-context";
+import type { ProductProps } from "../lib/types";
 
-const Product = ({
-  id,
-  image,
-  title,
-  price,
-  description,
-  onAddToCart,
-}: ProductProps) => {
+const Product = ({ id, image, title, price, description }: ProductProps) => {
+  const { addItemToCart } = useContext(CartContext);
   return (
     <article className="product">
       <img src={image} alt={title} />
@@ -27,7 +16,7 @@ const Product = ({
         <button
           className="rounded-md bg-amber-300 px-3 py-1"
           type="button"
-          onClick={() => onAddToCart(id)}
+          onClick={() => addItemToCart(id)}
         >
           Add to Cart
         </button>
