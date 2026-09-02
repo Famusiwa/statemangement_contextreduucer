@@ -27,5 +27,11 @@ export type ProductProps = {
   title: string;
   price: number;
   description: string;
-  // onAddToCart: (id: string) => void;
 };
+
+export type ShoppingCartAction =
+  | { type: "ADD_ITEM"; payload: { id: string } }
+  | {
+      type: "UPDATE_ITEM_QUANTITY";
+      payload: { productId: string; amount: number };
+    };
