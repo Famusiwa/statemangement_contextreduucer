@@ -10,7 +10,13 @@ const Product = ({ id, image, title, price, description }: ProductProps) => {
       <div className="px-4 py-2">
         <div className="flex justify-between">
           <h3>{title}</h3>
-          <p>${price.toFixed(2)}</p>
+          <p>
+            ₦
+            {price.toLocaleString("en-NG", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </p>
         </div>
         <p className="my-2">{description}</p>
         <button
